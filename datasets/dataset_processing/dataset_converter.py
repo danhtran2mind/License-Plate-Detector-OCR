@@ -4,7 +4,18 @@ import uuid
 import yaml
 import logging
 from pathlib import Path
-from datasets.dataset_processing.utils import create_yolo_structure, copy_matched_files
+
+import sys
+
+# Add parent directory to sys.path
+parent_dir = str(Path(__file__).resolve().parents[1])
+sys.path.insert(0, parent_dir)
+
+# Append datasets folder to sys.path
+datasets_dir = os.path.join(parent_dir, "datasets")
+sys.path.insert(0, datasets_dir)
+
+from dataset_processing.utils import create_yolo_structure, copy_matched_files
 
 def coco_kaggle_to_yolo(output_dir="yolo_standard_dataset"):
     """

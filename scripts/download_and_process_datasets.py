@@ -1,13 +1,19 @@
 import argparse
 import os
 from pathlib import Path
-
 import sys
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+# Add parent directory to sys.path
+parent_dir = str(Path(__file__).resolve().parents[1])
+sys.path.insert(0, parent_dir)
 
-from datasets.dataset_processing.dataset_downloader import download_datasets
-from datasets.dataset_processing.dataset_converter import coco_kaggle_to_yolo, convert_coco_huggingface_to_yolo
-from datasets.dataset_processing.validator import process_folders
+# Append datasets folder to sys.path
+datasets_dir = os.path.join(parent_dir, "datasets")
+sys.path.insert(0, datasets_dir)
+
+from dataset_processing.dataset_downloader import download_datasets
+
+from dataset_processing.dataset_converter import coco_kaggle_to_yolo, convert_coco_huggingface_to_yolo
+from dataset_processing.validator import process_folders
 
 def main():
     parser = argparse.ArgumentParser(description="Download and process license plate datasets for YOLOv11.")
@@ -24,7 +30,7 @@ def main():
     print(f"Combined dataset folder: {str(combined_dataset_folder)}")
     os.makedirs(str(combined_dataset_folder), exist_ok=True)
     os.chdir(args.dataset_base_dir)
-    
+
     # Download datasets
     download_datasets(combined_dataset_folder, args.roboflow_api_key)
 

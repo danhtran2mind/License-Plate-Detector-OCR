@@ -1,53 +1,40 @@
-"""Entry point for downloading and processing license plate datasets."""
 import argparse
-import sys
+import os
 from pathlib import Path
 
-# Add datasets/ directory to sys.path to enable imports from dataset_processing
-datasets_dir = str(Path(__file__).resolve().parents[1] / 'datasets')
-if datasets_dir not in sys.path:
-    sys.path.insert(0, datasets_dir)
-print(datasets_dir)
-from dataset_processing.utils import load_yaml_config, setup_logging
-from dataset_processing.dataset_downloader import download_datasets
-from dataset_processing.dataset_converter import convert_coco_to_yolo, convert_kaggle_to_yolo
-from dataset_processing.validator import process_folders
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-def check_python_version():
-    """Ensure Python version is 3.6 or higher."""
-    if sys.version_info < (3, 6):
-        print("Error: Python 3.6 or higher is required.")
-        sys.exit(1)
+from datasets.dataset_processing.dataset_downloader import download_datasets
+from datasets.dataset_processing.dataset_converter import coco_kaggle_to_yolo, convert_coco_huggingface_to_yolo
+from datasets.dataset_processing.validator import process_folders
 
 def main():
-    """Download and convert datasets to YOLOv11 format."""
-    check_python_version()
-
-    parser = argparse.ArgumentParser(description="License Plate Dataset Converter")
-    parser.add_argument('--roboflow-api-key', type=str, required=True, help="Roboflow API key")
-    parser.add_argument('--config', type=str, default='config/datasets.yaml', help="Path to dataset config YAML")
-    parser.add_argument('--output-dir', type=str, default='datasets/yolo_standard_dataset', help="Output directory for YOLO dataset")
+    parser = argparse.ArgumentParser(description="Download and process license plate datasets for YOLOv11.")
+    parser.add_argument("--output-dir", default="yolo_standard_dataset", help="Output directory for YOLOv11 dataset")
+    parser.add_argument("--dataset-base-dir", default="./datasets/all_datasets", help="Base directory for downloaded datasets")
+    parser.add_argument("--huggingface-base-path", default="./dataset_{}/license-plate-object-detection/data", help="Base path for HuggingFace dataset")
+    parser.add_argument("--roboflow-api-key", required=True, help="Roboflow API key for downloading datasets")
     args = parser.parse_args()
 
-    setup_logging()
-    try:
-        config = load_yaml_config(args.config)
-    except FileNotFoundError:
-        print(f"Error: Config file '{args.config}' not found.")
-        sys.exit(1)
-    except KeyError as e:
-        print(f"Error: Missing key {e} in config file.")
-        sys.exit(1)
+    # Create base dataset directory
+    os.makedirs(args.dataset_base_dir, exist_ok=True)
+    os.chdir(args.dataset_base_dir)
+    combined_dataset_folder = Path(args.output_dir)
+    combined_dataset_folder.mkdir(exist_ok=True)
 
-    dataset_id_list = config.get('dataset_id_list')
-    if not dataset_id_list:
-        print("Error: 'dataset_id_list' is empty or not provided in config.")
-        sys.exit(1)
+    # Download datasets
+    download_datasets(combined_dataset_folder, args.roboflow_api_key)
 
-    download_datasets(dataset_id_list, args.roboflow_api_key, args.output_dir)
-    convert_kaggle_to_yolo(args.output_dir)
-    convert_coco_to_yolo(f"dataset_{len(dataset_id_list)-1}/license-plate-object-detection", args.output_dir)
-    process_folders(args.output_dir)
+    # Convert Kaggle datasets to YOLO format
+    coco_kaggle_to_yolo(str(combined_dataset_folder))
+
+    # Convert HuggingFace dataset to YOLO format
+    huggingface_base_path = args.huggingface_base_path.format("9")  # Assuming dataset_9 for HuggingFace
+    convert_coco_huggingface_to_yolo(huggingface_base_path, str(combined_dataset_folder))
+
+    # Validate and clean dataset
+    process_folders(str(combined_dataset_folder))
 
 if __name__ == "__main__":
     main()

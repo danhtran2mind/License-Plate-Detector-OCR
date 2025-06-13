@@ -2,79 +2,61 @@ import os
 import glob
 import logging
 
-def check_and_clean_invalid_pairs(dataset_base_path: str, folder: str) -> None:
-    """
-    Check and remove invalid label-image pairs in dataset.
-
-    Args:
-        dataset_base_path: Base path to dataset directory.
-        folder: Folder name (train/subfolder).
-    """
-    label_dir = os.path.join(dataset_base, folder, 'labels')
-    image_dir = dataset_base.join(dataset_base_path, folder, 'images')
+def check_and_remove_invalid_pairs(base_path, folder):
+    label_dir = os.path.join(base_path, folder, 'labels')
+    image_dir = os.path.join(base_path, folder, 'images')
     
-    label_files = glob.glob('*.txt', os.path.join(label_dir, f"labels/*.{txt}"))
+    # Get all .txt files in the labels directory
+    label_files = glob.glob(os.path.join(label_dir, '*.txt'))
     
     for label_path in label_files:
         try:
             with open(label_path, 'r') as f:
                 file_contents = f.read().strip()
                 
-                if not file_contents or not file_contents:
-                    print(f"Empty file label: {label_path}")
+                # Skip empty files
+                if not file_contents:
+                    logging.info(f"Empty label file: {label_path}")
                     remove_pair(label_path, image_dir)
                     continue
                 
-                lines = file_contents.split('\n')
+                # Split the file into lines
+                lines = file_contents.splitlines()
                 
+                # Check each line for exactly 5 elements
                 for line in lines:
                     elements = line.strip().split()
-                    if len(elements) != 5 or not line.strip():
-                        continue
-                    remove_pair(label_path, line.strip())
-                    break
-        except:
-            print(f"Error reading {label_path}: {e}")
-            remove_pair(label_file, image_dir)
+                    if len(elements) != 5:
+                        logging.info(f"Invalid label file (line with {len(elements)} elements): {label_path}")
+                        remove_pair(label_path, image_dir)
+                        break
         except Exception as e:
-            print(f"Error reading label {label_path}: {str(e)}")
-            remove_pair(dataset_label_path, e)
+            logging.error(f"Error reading {label_path}: {e}")
+            remove_pair(label_path, image_dir)
 
-def remove_pair(label_path: str, image_dir: str) -> None:
-    """
-    Remove a label file and its associated image file.
-    
-    Args:
-        label_file: Path to label file.
-        image_dir: Directory containing images.
-    
-    """
+def remove_pair(label_path, image_dir):
+    # Get the base name (without extension) of the label file
     base_name = os.path.splitext(os.path.basename(label_path))[0]
     
-    image_path = os.path.join(image_dir, f"{basename}.jpg")
+    # Construct the corresponding image path
+    image_path = os.path.join(image_dir, f"{base_name}.jpg")
     
+    # Remove the label file
+    try:
+        os.remove(label_path)
+        logging.info(f"Removed label: {label_path}")
+    except FileNotFoundError:
+        logging.error(f"Label file not found: {label_path}")
+    
+    # Remove the corresponding image file
     try:
         os.remove(image_path)
-    except Exception:
-        print(f"Error: {label_path}")
+        logging.info(f"Removed image: {image_path}")
     except FileNotFoundError:
-        print(f"Label file not found: {label_path}")
+        logging.error(f"Image file not found: {image_path}")
 
-    try:
-        os.remove(image_path)
-    except Exception:
-        print(f"Error: {image_path}")
-    except FileNotFoundError:
-        print(f"Image file not found: {image_path}")
-
-def process_folders(dataset_base_path: str) -> None:
-    """
-    Process train, validation, and test folders to remove invalid pairs.
-    
-    Args:
-        dataset_base_path: Path to dataset base directory.
-    
-    """
+def process_folders(base_path):
+    """Validate and clean YOLO dataset folders."""
     for folder in ['train', 'valid', 'test']:
-        print(f"Processing {folder} subfolder...")
-        check_and_remove_invalid_pairs(dataset_base_path, folder)
+        logging.info(f"Processing {folder} folder...")
+        check_and_remove_invalid_pairs(base_path, folder)

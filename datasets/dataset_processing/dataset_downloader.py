@@ -56,7 +56,7 @@ def download_datasets(combined_dataset_folder, roboflow_api_key):
 
             for folder in ['train', 'valid', 'test']:
                 source_path = dataset_path / folder
-                dest_path = Path("..") / combined_dataset_folder / folder
+                dest_path = Path("../../..") / combined_dataset_folder / folder
 
                 if not source_path.exists():
                     logging.warning(f"Source folder does not exist: {source_path}")

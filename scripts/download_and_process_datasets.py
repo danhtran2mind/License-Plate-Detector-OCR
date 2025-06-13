@@ -11,7 +11,7 @@ from datasets.dataset_processing.validator import process_folders
 
 def main():
     parser = argparse.ArgumentParser(description="Download and process license plate datasets for YOLOv11.")
-    parser.add_argument("--output-dir", default="yolo_standard_dataset", help="Output directory for YOLOv11 dataset")
+    parser.add_argument("--output-dir", default="./datasets/yolo_standard_dataset", help="Output directory for YOLOv11 dataset")
     parser.add_argument("--dataset-base-dir", default="./datasets/all_datasets", help="Base directory for downloaded datasets")
     parser.add_argument("--huggingface-base-path", default="./dataset_{}/license-plate-object-detection/data", help="Base path for HuggingFace dataset")
     parser.add_argument("--roboflow-api-key", required=True, help="Roboflow API key for downloading datasets")
@@ -19,10 +19,12 @@ def main():
 
     # Create base dataset directory
     os.makedirs(args.dataset_base_dir, exist_ok=True)
-    os.chdir(args.dataset_base_dir)
+    
     combined_dataset_folder = Path(args.output_dir)
-    combined_dataset_folder.mkdir(exist_ok=True)
-
+    print(f"Combined dataset folder: {str(combined_dataset_folder)}")
+    os.makedirs(str(combined_dataset_folder), exist_ok=True)
+    os.chdir(args.dataset_base_dir)
+    
     # Download datasets
     download_datasets(combined_dataset_folder, args.roboflow_api_key)
 

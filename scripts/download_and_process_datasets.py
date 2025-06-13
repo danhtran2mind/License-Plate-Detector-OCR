@@ -7,7 +7,7 @@ from pathlib import Path
 datasets_dir = str(Path(__file__).resolve().parents[1] / 'datasets')
 if datasets_dir not in sys.path:
     sys.path.insert(0, datasets_dir)
-
+print(datasets_dir)
 from dataset_processing.utils import load_yaml_config, setup_logging
 from dataset_processing.dataset_downloader import download_datasets
 from dataset_processing.dataset_converter import convert_coco_to_yolo, convert_kaggle_to_yolo
@@ -24,9 +24,9 @@ def main():
     check_python_version()
 
     parser = argparse.ArgumentParser(description="License Plate Dataset Converter")
-    parser.add_argument('--api-key', type=str, required=True, help="Roboflow API key")
+    parser.add_argument('--roboflow-api-key', type=str, required=True, help="Roboflow API key")
     parser.add_argument('--config', type=str, default='config/datasets.yaml', help="Path to dataset config YAML")
-    parser.add_argument('--output-dir', type=str, default='yolo_standard_dataset', help="Output directory for YOLO dataset")
+    parser.add_argument('--output-dir', type=str, default='datasets/yolo_standard_dataset', help="Output directory for YOLO dataset")
     args = parser.parse_args()
 
     setup_logging()
@@ -44,7 +44,7 @@ def main():
         print("Error: 'dataset_id_list' is empty or not provided in config.")
         sys.exit(1)
 
-    download_datasets(dataset_id_list, args.api_key, args.output_dir)
+    download_datasets(dataset_id_list, args.roboflow_api_key, args.output_dir)
     convert_kaggle_to_yolo(args.output_dir)
     convert_coco_to_yolo(f"dataset_{len(dataset_id_list)-1}/license-plate-object-detection", args.output_dir)
     process_folders(args.output_dir)

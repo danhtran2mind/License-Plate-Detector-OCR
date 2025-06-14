@@ -6,7 +6,7 @@ import argparse
 
 # Set up argument parser
 parser = argparse.ArgumentParser(description='Train a YOLOv10 model for license plate detection.')
-parser.add_argument('--model-path', type=str, default='./ckpts/raw/yolo12n.pt', help='Path to the YOLO model weights')
+parser.add_argument('--model', type=str, default='./ckpts/raw/yolo12n.pt', help='Model path or model name like "yolo12n.pt"')
 parser.add_argument('--data', type=str, default='./datasets/yolo_standard_dataset/data.yaml', help='Path to the dataset YAML file')
 parser.add_argument('--epochs', type=int, default=100, help='Number of training epochs')
 parser.add_argument('--batch', type=int, default=64, help='Batch size for training')
@@ -27,7 +27,7 @@ parent_dir = str(Path(__file__).resolve().parents[1])
 sys.path.insert(0, parent_dir)
 
 # Load the YOLOv10 model
-model = YOLO(args.model_path)
+model = YOLO(args.model)
 
 # Train the model
 model.train(

@@ -1,0 +1,27 @@
+datasets:
+  - id: fareselmenshawii/large-license-plate-dataset
+    type: kaggle
+  - id: duydieunguyen/licenseplates
+    type: kaggle
+  - id: ronakgohil/license-plate-dataset
+    type: kaggle
+  - id: bomaich/vnlicenseplate
+    type: kaggle
+  - id: congtuu/vietnamese-license-plate-obb
+    type: kaggle
+  - id: haitonthat/vietnam-license-plate-bounding-box
+    type: kaggle
+  - id: university-of-southeastern-philippines-cnl9c/license-plate-detection-merged-projects
+    type: roboflow
+    format: yolov11
+    version: 3
+  - id: ev-dshfb/license-plate-w8chc
+    type: roboflow
+    format: yolov11
+    version: 1
+  - id: kanwal-masroor-gv4jr/yolov7-license-plate-detection
+    type: roboflow
+    format: yolov11
+    version: 3
+  - id: keremberke/license-plate-object-detection
+    type: huggingface

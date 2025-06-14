@@ -70,7 +70,7 @@ python scripts/train_yolo.py\
     --batch 32 \
     --device 0 \
     --project "./ckpts/finetune/runs" \
-    --name "license_plate_detector" \
+    --name "license_plate_detector"
 ```
 
 ### More Configurations

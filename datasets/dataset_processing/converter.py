@@ -94,10 +94,9 @@ def copy_matched_files(src_image_dir, src_label_dir, dest_image_dir, dest_label_
 
 def create_data_yaml(output_dir):
     data_yaml = {
-        'path': './dataset',
-        'train': './dataset/train/images',
-        'val': './dataset/valid/images',
-        'test': './dataset/test/images',
+        'train': '../train/images',
+        'val': '../valid/images',
+        'test': '../test/images',
         'nc': 1,
         'names': ['license_plate']
     }

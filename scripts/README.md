@@ -16,7 +16,7 @@ This guide provides instructions for training an object detection model using YO
 To download YOLOv12 model checkpoints, run the following command:
 
 ```bash
-python scripts/download_yolo_models.py \
+python scripts/download_yolo_model.py \
     --url <yolo_model_released_url> \
     --output-dir <saved_yolo_model_path>
 ```

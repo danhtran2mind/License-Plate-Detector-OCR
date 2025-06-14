@@ -29,7 +29,7 @@ sys.path.insert(0, parent_dir)
 # Load the YOLOv10 model
 model = YOLO(args.model_path)
 
-Train the model
+# Train the model
 model.train(
     data=args.data,
     task='detect',

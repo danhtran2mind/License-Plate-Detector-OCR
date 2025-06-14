@@ -2,3 +2,6 @@ opencv-python
 ultralytics
 roboflow
 wget
+paddleocr
+paddlepaddle-gpu
+paddlepaddle

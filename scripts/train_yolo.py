@@ -29,19 +29,19 @@ sys.path.insert(0, parent_dir)
 # Load the YOLOv10 model
 model = YOLO(args.model_path)
 
-# Train the model
-# model.train(
-#     data=args.data,
-#     task='detect',
-#     mode='train',
-#     epochs=args.epochs,
-#     batch=args.batch,
-#     resume=args.resume,
-#     patience=args.patience,
-#     lr0=args.lr0,
-#     lrf=args.lrf,
-#     device=args.device,
-#     project=args.project,
-#     name=args.name,
-#     save=args.save
-# )
+Train the model
+model.train(
+    data=args.data,
+    task='detect',
+    mode='train',
+    epochs=args.epochs,
+    batch=args.batch,
+    resume=args.resume,
+    patience=args.patience,
+    lr0=args.lr0,
+    lrf=args.lrf,
+    device=args.device,
+    project=args.project,
+    name=args.name,
+    save=args.save
+)

@@ -11,7 +11,7 @@ This guide provides instructions for training an object detection model using YO
 -   Download the desired YOLOv12 model checkpoint (e.g., yolo12n.pt) using the provided script.
     
 
-## Downloading Pre-trained Models
+## 1 Downloading Pre-trained Models
 
 To download YOLOv12 model checkpoints, run the following command:
 
@@ -23,7 +23,30 @@ python scripts/download_yolo_models.py \
 
 This will save the pre-trained weights to the ./ckpts/raw/ directory.
 
-## Fine-Tuning the Model
+## 2 Process Dataset
+Here is the CLI command to download and process datasets.
+```bash
+python scripts/download_and_process_datasets.py \
+    --output-dir <combined_dataset_path> \
+    --dataset-base-dir <directory_containing_all_datasets> \
+    --config <datasets_config_path> \
+    --platforms <list_of_platforms_to_download_from> \  # e.g., ["kaggle", "roboflow", "huggingface"]
+    --roboflow-api-key <roboflow_api_key>  # Optional: required if "roboflow" is included in --platforms
+```
+For example:
+```bash
+python scripts/download_and_process_datasets.py \
+    --output-dir ./datasets/yolo_standard_dataset \
+    --dataset-base-dir ./datasets/all_datasets \
+    --config ./config/dataset_config.yaml \
+    --roboflow-api-key YOUR_ROBOFLOW_APIKEY \
+    --platforms "kaggle" "roboflow" "huggingface" # e.g., ["kaggle", "roboflow", "huggingface"]
+```
+For help:
+```bash
+python scripts/download_and_process_datasets.py -h
+```
+## 3 Fine-Tuning the Model
 
 To fine-tune a YOLOv12 model for object detection, use the provided training script with customizable parameters. Run the following command and adjust the arguments based on your requirements:
 
@@ -49,17 +72,10 @@ python scripts/train_yolo.py\
     --project "./ckpts/finetune/runs" \
     --name "license_plate_detector" \
 ```
+
 ### More Configurations
+Run this CLI command to show `Help`.
 ```bash
 python scripts/train_yolo.py -h
 ```
-## Notes
-
--   Ensure the dataset specified in data.yaml is properly formatted and accessible.
-    
--   Modify hyperparameters (e.g., epochs, batch, lr0) based on your dataset and computational resources.
-    
--   Training logs and checkpoints will be saved in the ./ckpts/finetune/runs/license_plate_detector/ directory.
-    
-
-For additional details on YOLOv12 and advanced configurations, refer to the Ultralytics Documentation.
+## Using PaddleOCR

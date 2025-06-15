@@ -94,8 +94,8 @@ yolo detect train \
     device=<device_id or list_of_cuda or "cpu"> \
     project=<output_directory> \
     name=<experiment_name> \
-    save=<save_checkpoint> \
-    resume=<resume_training>
+    save=<true or false> \
+    resume=<true or false>
 ```
 
 ### Example Configuration

@@ -47,7 +47,7 @@ For help:
 python scripts/download_and_process_datasets.py -h
 ```
 ## 3 Fine-Tuning the Model
-
+<!--
 To fine-tune a YOLOv12 model for object detection, use the provided training script with customizable parameters. Run the following command and adjust the arguments based on your requirements:
 
 ```bash
@@ -78,4 +78,49 @@ Run this CLI command to show `Help`.
 ```bash
 python scripts/train_yolo.py -h
 ```
+-->
+To fine-tune a YOLOv12 model for object detection, use the provided training script with customizable parameters. Run the following command and adjust the arguments based on your requirements:
+
+```bash
+yolo detect train \
+    model=<yolo_model_path or yolo_version_name> \
+    data=<dataset_config_path> \
+    epochs=<number_of_epochs> \
+    batch=<batch_size> \
+    patience=<early_stopping_patience> \
+    imgsz=<image_size> \
+    lr0=<initial_learning_rate> \
+    lrf=<final_learning_rate> \
+    device=<device_id or list_of_cuda or "cpu"> \
+    project=<output_directory> \
+    name=<experiment_name> \
+    save=<save_checkpoint> \
+    resume=<resume_training>
+```
+
+### Example Configuration
+
+For reference, the equivalent configuration using the yolo CLI command is shown below:
+```bash
+yolo detect train \
+    model="./ckpts/raw/yolo12n.pt" \
+    data="./datasets/yolo_standard_dataset/data.yaml" \
+    epochs=100 \
+    batch=32 \
+    patience=20 \
+    imgsz=640 \
+    lr0=0.01 \
+    lrf=0.001 \
+    device=0 \
+    project="./ckpts/finetune/runs" \
+    name="license_plate_detector" \
+    save=true \
+    resume=false
+```
+### More Configurations
+Run this CLI command to show `Help`.
+```bash
+yolo --help
+```
+
 ## Using PaddleOCR

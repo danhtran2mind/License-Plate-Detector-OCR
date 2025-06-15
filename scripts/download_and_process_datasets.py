@@ -19,7 +19,7 @@ def main():
     parser.add_argument("--output-dir", default="./datasets/yolo_standard_dataset", help="Output directory for YOLOv11 dataset")
     parser.add_argument("--dataset-base-dir", default="./datasets/all_datasets", help="Base directory for downloaded datasets")
     parser.add_argument("--roboflow-api-key", required=True, help="Roboflow API key for downloading datasets")
-    parser.add_argument("--config", default="./config/dataset_config.yaml", help="Path to dataset config YAML")
+    parser.add_argument("--config", default="./config/datasets_config.yaml", help="Path to dataset config YAML")
     parser.add_argument("--platforms", nargs="*", default=["kaggle", "roboflow", "huggingface"], choices=["kaggle", "roboflow", "huggingface"], help="Platforms to download (default: all)")
     args = parser.parse_args()
 

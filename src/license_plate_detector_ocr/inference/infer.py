@@ -2,9 +2,9 @@ import os
 import sys
 
 # Append the current directory to sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__))))
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__))))
 
-import inference.paddleocr_infer as process_ocr
+import paddleocr_infer as process_ocr
 
 # Example with multiple images
 image_list = ['plate-1.png', 'plate-2.png', 'plate-3.jpg']

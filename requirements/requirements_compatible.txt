@@ -1,0 +1,7 @@
+opencv-python==4.11.0.86
+ultralytics==8.3.162
+roboflow==1.1.66
+wget==3.2
+paddleocr==2.9.0 
+paddlepaddle-gpu==2.6.2 
+paddlepaddle==2.6.2

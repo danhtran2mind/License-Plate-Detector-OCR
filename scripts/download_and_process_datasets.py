@@ -5,24 +5,20 @@ import sys
 import os
 
 # Add parent directory to sys.path
-parent_dir = str(Path(__file__).resolve().parents[1])
-sys.path.insert(0, parent_dir)
+# parent_dir = str(Path(__file__).resolve().parents[1])
+# sys.path.insert(0, parent_dir)
 
-# Append datasets folder to sys.path
-datasets_dir = os.path.join(parent_dir, "datasets")
-sys.path.insert(0, datasets_dir)
+# # Append datasets folder to sys.path
+# datasets_dir = os.path.join(parent_dir, "datasets")
+# sys.path.insert(0, datasets_dir)
+
+# Append the current directory to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..',
+                "src", "license_plate_detector_ocr", "data")))
 
 from dataset_processing import config_loader, downloader, processor, converter
 
-def main():
-    parser = argparse.ArgumentParser(description="Download and process license plate datasets.")
-    parser.add_argument("--output-dir", default="./datasets/yolo_standard_dataset", help="Output directory for YOLOv11 dataset")
-    parser.add_argument("--dataset-base-dir", default="./datasets/all_datasets", help="Base directory for downloaded datasets")
-    parser.add_argument("--roboflow-api-key", required=True, help="Roboflow API key for downloading datasets")
-    parser.add_argument("--config", default="./config/datasets_config.yaml", help="Path to dataset config YAML")
-    parser.add_argument("--platforms", nargs="*", default=["kaggle", "roboflow", "huggingface"], choices=["kaggle", "roboflow", "huggingface"], help="Platforms to download (default: all)")
-    args = parser.parse_args()
-
+def main(args):
     logging.basicConfig(filename='dataset_conversion.log', level=logging.INFO,
                         format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -53,4 +49,13 @@ def main():
     processor.process_folders(args.output_dir)
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Download and process license plate datasets.")
+    parser.add_argument("--output-dir", default="./data/yolo_standard_dataset", help="Output directory for YOLOv11 dataset")
+    parser.add_argument("--dataset-base-dir", default="./data/all_datasets", help="Base directory for downloaded datasets")
+    parser.add_argument("--roboflow-api-key", required=True, help="Roboflow API key for downloading datasets")
+    parser.add_argument("--config", default="./configs/datasets_config.yaml", help="Path to dataset config YAML")
+    parser.add_argument("--platforms", nargs="*", default=["kaggle", "roboflow", "huggingface"], choices=["kaggle", "roboflow", "huggingface"], help="Platforms to download (default: all)")
+    
+    args = parser.parse_args()
+
+    main(args)

@@ -4,14 +4,6 @@ from pathlib import Path
 import sys
 import os
 
-# Add parent directory to sys.path
-# parent_dir = str(Path(__file__).resolve().parents[1])
-# sys.path.insert(0, parent_dir)
-
-# # Append datasets folder to sys.path
-# datasets_dir = os.path.join(parent_dir, "datasets")
-# sys.path.insert(0, datasets_dir)
-
 # Append the current directory to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..',
                 "src", "license_plate_detector_ocr", "data")))
@@ -52,7 +44,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Download and process license plate datasets.")
     parser.add_argument("--output-dir", default="./data/yolo_standard_dataset", help="Output directory for YOLOv11 dataset")
     parser.add_argument("--dataset-base-dir", default="./data/all_datasets", help="Base directory for downloaded datasets")
-    parser.add_argument("--roboflow-api-key", required=True, help="Roboflow API key for downloading datasets")
+    parser.add_argument("--roboflow-api-key", required='roboflow' in sys.argv, help="Roboflow API key for downloading datasets")
     parser.add_argument("--config", default="./configs/datasets_config.yaml", help="Path to dataset config YAML")
     parser.add_argument("--platforms", nargs="*", default=["kaggle", "roboflow", "huggingface"], choices=["kaggle", "roboflow", "huggingface"], help="Platforms to download (default: all)")
     

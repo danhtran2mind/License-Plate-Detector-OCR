@@ -34,8 +34,8 @@ python apps/gradio_app.py
 #### Step 1: Clone the Repository
 Clone the project repository and navigate to the project directory:
 ```bash
-git clone https://github.com/danhtran2mind/Text2Video-Ghibli-style.git
-cd Text2Video-Ghibli-style
+git clone https://github.com/danhtran2mind/License-Plate-Detector-OCR.git
+cd License-Plate-Detector-OCR
 ```
 
 #### Step 2: Install Dependencies
@@ -46,23 +46,29 @@ pip install -r requirements/requirements.txt
 
 #### Step 3: Configure the Environment
 Run the following scripts to set up the project:
-- **Install Third-Party Dependencies**  
+- **Prepare Dataset (Optional, for Training)**  
   ```bash
-  python scripts/setup_third_party.py
+  python scripts/download_and_process_datasets.py
+  ```
+  ```bash
+  python script.py --platforms kaggle huggingface
+  ```
+  ```bash
+  python script.py --platforms roboflow --roboflow-api-key your_roboflow_api_key
+  ```
+   ```bash
+  python script.py --roboflow-api-key your_roboflow_api_key
   ```
 - **Download Model Checkpoints**  
   ```bash
   python scripts/download_ckpts.py
   ```
-- **Prepare Dataset (Optional, for Training)**  
-  ```bash
-  python scripts/process_dataset.py
-  ```
+
 
 ### Training
 - To train the model:
 ```bash
-python src/text2video_ghibli_style/train.py
+python src/license_plate_detector_ocr/train.py
 ```
 - Training Hyperparameters
 Refer to the [Training Documents](docs/training/training_doc.md) for detailed hyperparameters used in fine-tuning the model. ⚙️
@@ -70,9 +76,10 @@ Refer to the [Training Documents](docs/training/training_doc.md) for detailed hy
 ### Inference
 To generate videos using the trained model:
 ```bash
-python src/text2video_ghibli_style/inference.py
+python src/license_plate_detector_ocr/infer.py
 ```
-
+- Training Hyperparameters
+Refer to the [Training Documents](docs/inference/inference_doc.md) for detailed hyperparameters used in fine-tuning the model. ⚙️
 ## Inference Samples
 
 

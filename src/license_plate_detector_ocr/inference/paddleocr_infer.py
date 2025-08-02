@@ -1,24 +1,3 @@
-# from paddleocr import PaddleOCR
-
-# ocr = PaddleOCR(
-#     use_doc_orientation_classify=False,
-#     use_doc_unwarping=False,
-#     lang='en',
-#     use_textline_orientation=False,  # This disables angle classification, so no need for use_angle_cls
-#     text_recognition_model_name='en_PP-OCRv3_rec_slim',  # Fastest detection model
-#     text_detection_model_name="en_PP-OCRv3_det_slim",
-#     # rec_model_dir='ch_ppocr_mobile_v2.0_rec_infer',  # Fastest recognition model
-# )
-
-# result = ocr.ocr("plate-1.png", cls=True)
-
-# plate_list = []
-# for line in result:
-#     current_line = []
-#     for word_info in line:
-#         current_line.append(word_info[-1][0])
-#     plate_list.append(' '.join(current_line))
-#####################3
 from paddleocr import PaddleOCR
 from typing import Union, List
 

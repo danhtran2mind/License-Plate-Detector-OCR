@@ -4,12 +4,13 @@ import shutil
 import traceback
 import logging
 import gradio as gr
-import uuid  # Import uuid module
 from gradio_app.utils import convert_to_supported_format
-
 # Adjust sys.path to include the src directory
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'src', 'license_plate_detector_ocr')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                              '..', '..', 'src', 'license_plate_detector_ocr')))
 from infer import infer, is_image_file
+
+
 
 def gradio_process(input_file, input_type):
     """Process the input file (image or video) for license plate detection and OCR."""
@@ -30,12 +31,10 @@ def gradio_process(input_file, input_type):
             logging.error(error_msg)
             return None, None, error_msg, None, None
         
-        # Set output path with UUID
+        # Set output path
         output_dir = "apps/gradio_app/temp_data"
         os.makedirs(output_dir, exist_ok=True)
-        # Modified line with UUID
-        unique_id = str(uuid.uuid4())[:8]  # Use first 8 characters of UUID for brevity
-        output_filename = f"{os.path.splitext(os.path.basename(temp_input_path))[0]}_{unique_id}_output{'_output.jpg' if is_image_file(temp_input_path) else '_output.mp4'}"
+        output_filename = os.path.splitext(os.path.basename(temp_input_path))[0] + ('_output.jpg' if is_image_file(temp_input_path) else '_output.mp4')
         output_path = os.path.join(output_dir, output_filename)
         logging.debug(f"Output path: {output_path}")
         

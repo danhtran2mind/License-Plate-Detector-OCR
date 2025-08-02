@@ -23,7 +23,7 @@ from paddleocr import PaddleOCR
 from typing import Union, List
 
 # Initialize PaddleOCR once with optimized settings for English license plate recognition
-ocr = PaddleOCR(
+OCR = PaddleOCR(
     lang='en',
     use_doc_orientation_classify=False,
     use_doc_unwarping=False,
@@ -49,7 +49,7 @@ def process_ocr(image_input: Union[str, List[str]]) -> Union[List[str], List[Lis
     # Process each image and extract text
     results = []
     for path in image_paths:
-        ocr_results = ocr.ocr(path, cls=False)  # cls=False since angle classification is disabled
+        ocr_results = OCR.ocr(path, cls=False)  # cls=False since angle classification is disabled
         plate_list = [' '.join(word_info[-1][0] for word_info in line) for line in ocr_results if line]
         results.append(plate_list)
     

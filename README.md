@@ -47,39 +47,42 @@ pip install -r requirements/requirements.txt
 #### Step 3: Configure the Environment
 Run the following scripts to set up the project:
 - **Prepare Dataset (Optional, for Training)**  
-  ```bash
-  python scripts/download_and_process_datasets.py
-  ```
-  ```bash
-  python script.py --platforms kaggle huggingface
-  ```
-  ```bash
-  python script.py --platforms roboflow --roboflow-api-key your_roboflow_api_key
-  ```
-   ```bash
-  python script.py --roboflow-api-key your_roboflow_api_key
-  ```
+  - Using `Kaggle`, `Roboflow`, `HuggingFace`
+    ```bash
+    python scripts/download_and_process_datasets.py --roboflow-api-key <your_roboflow_api_key>
+    ```
+  - Using `Kaggle`, `HuggingFace` only
+    ```bash
+    python scripts/download_and_process_datasets.py --platforms kaggle huggingface
+    ```
+  - Using `Roboflow` only
+    ```bash
+    python scripts/download_and_process_datasets.py --platforms roboflow --roboflow-api-key 
+    <your_roboflow_api_key>
+    ```
+  
 - **Download Model Checkpoints**  
   ```bash
   python scripts/download_ckpts.py
   ```
-
+- Scripts Arguments
+Refer to the [Scripts Documents](docs/scripts/scripts_doc.md) for detailed Scripts Arguments used in fine-tuning the model. ⚙️
 
 ### Training
 - To train the model:
 ```bash
 python src/license_plate_detector_ocr/train.py
 ```
-- Training Hyperparameters
-Refer to the [Training Documents](docs/training/training_doc.md) for detailed hyperparameters used in fine-tuning the model. ⚙️
+- Training Arguments
+Refer to the [Training Documents](docs/training/training_doc.md) for detailed Training Arguments used in fine-tuning the model. ⚙️
 
 ### Inference
 To generate videos using the trained model:
 ```bash
 python src/license_plate_detector_ocr/infer.py
 ```
-- Training Hyperparameters
-Refer to the [Training Documents](docs/inference/inference_doc.md) for detailed hyperparameters used in fine-tuning the model. ⚙️
+- Inference Arguments
+Refer to the [Inference Documents](docs/inference/inference_doc.md) for detailed Inference Arguments used in fine-tuning the model. ⚙️
 ## Inference Samples
 
 

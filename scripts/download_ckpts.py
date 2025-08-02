@@ -1,34 +1,62 @@
 import wget
 import os
 import argparse
+from huggingface_hub import hf_hub_download
 
-# Set up argument parser
-parser = argparse.ArgumentParser(description="Download model files using wget.")
-parser.add_argument('--url', type=str,
-                    default='https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo12n.pt',
-                    help='URL of the model to download')
-parser.add_argument('--output-dir', type=str, default='./ckpts/raw',
-                    help='Output directory for downloaded models')
-
-# Parse arguments
-args = parser.parse_args()
-
-# Get URL and output directory from arguments
-model_urls = [args.url]  # Single URL as a list for consistency
-output_dir = args.output_dir
-
-for url in model_urls:
+def download_model_ckpts(args):
+    """
+    Download the yolo12n.pt model from a URL and the best.pt model file from a Hugging Face repository.
+    """
+    # Download yolo12n.pt from GitHub URL
+    model_url = args.url
+    output_dir = args.output_dir
+    raw_output_dir = os.path.join(output_dir, 'raw')  # Subdirectory for wget download
+    
     # Extract filename from URL
-    filename = url.split("/")[-1]
-    output_path = os.path.join(output_dir, filename)  # Construct full path
+    filename = model_url.split("/")[-1]
+    output_path = os.path.join(raw_output_dir, filename)
     
     # Create directory if it doesn't exist
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     
-    # Download with additional wget arguments
+    # Download with wget
     wget.download(
-        url,
+        model_url,
         out=output_path,
-        bar=wget.bar_adaptive,  # Show progress bar
+        bar=wget.bar_adaptive  # Show progress bar
     )
-    print(f"\nDownloaded model to {output_path}")
+    print(f"\nDownloaded model from {model_url} to {output_path}")
+
+    # Download best.pt from Hugging Face repository
+    hf_repo = args.hf_repo
+    model_file = "yolo/finetune/runs/license_plate_detector/weights/best.pt"
+    
+    # Construct output path for Hugging Face file
+    hf_output_path = os.path.join(output_dir, "best.pt")
+    
+    # Create directory if it doesn't exist
+    os.makedirs(os.path.dirname(hf_output_path), exist_ok=True)
+    
+    # Download the specific file from Hugging Face
+    downloaded_path = hf_hub_download(
+        repo_id=hf_repo,
+        filename=model_file,
+        local_dir=output_dir,
+        local_dir_use_symlinks=False
+    )
+    print(f"\nDownloaded model file from {hf_repo} to {downloaded_path}")
+
+if __name__ == "__main__":
+    # Set up argument parser
+    parser = argparse.ArgumentParser(description="Download yolo12n.pt from URL and best.pt from Hugging Face repository.")
+    parser.add_argument('--url', type=str,
+                        default='https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo12n.pt',
+                        help='URL of the yolo12n.pt model to download via wget')
+    parser.add_argument('--output-dir', type=str, default='./ckpts',
+                        help='Base output directory for downloaded model files')
+    parser.add_argument('--hf-repo', type=str, default='danhtran2mind/license-plate-detector-ocr',
+                        help='Hugging Face repository ID to download model file from')
+
+    # Parse arguments
+    args = parser.parse_args()
+    download_model_ckpts(args)

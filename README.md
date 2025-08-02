@@ -71,7 +71,7 @@ Refer to the [Scripts Documents](docs/scripts/scripts_doc.md) for detailed Scrip
 ### Training
 - To train the model:
 ```bash
-python src/license_plate_detector_ocr/train.py
+python src/license_plate_detector_ocr/training/train_yolo.py
 ```
 - Training Arguments
 Refer to the [Training Documents](docs/training/training_doc.md) for detailed Training Arguments used in fine-tuning the model. ⚙️

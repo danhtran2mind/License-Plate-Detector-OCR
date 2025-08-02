@@ -2,6 +2,7 @@ opencv-python
 ultralytics
 roboflow
 wget
+ffmpeg-python
 paddleocr
 paddlepaddle-gpu
 paddlepaddle

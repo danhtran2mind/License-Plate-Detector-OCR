@@ -58,7 +58,12 @@ with gr.Blocks(css=custom_css) as iface:
         """,
         elem_classes="markdown-title"
     )
-
+    gr.HTML("""
+            You can explore the source code and contribute to the project on 
+            <a href="https://github.com/danhtran2mind/License-Plate-Detector-OCR">danhtran2mind/License-Plate-Detector-OCR</a>.
+            You can explore the HuggingFace Model Hub on 
+            <a href="https://huggingface.co/danhtran2mind/license-plate-detector-ocr">danhtran2mind/license-plate-detector-ocr</a>.
+    """)
         
     with gr.Row():
         with gr.Column(scale=1):
@@ -119,7 +124,14 @@ with gr.Blocks(css=custom_css) as iface:
             interactive=True,
             elem_classes="custom-table"
         )
+    with gr.Row():
+        gr.Markdown("""
+                    This project utilizes:
 
+                    - **Detection task**: YOLOv12 architecture model (YOLO12n) from [![GitHub Repo](https://img.shields.io/badge/GitHub-sunsmarterjie%2Fyolov12-blue?style=flat&logo=github)](https://github.com/sunsmarterjie/yolov12) and documentation at [![Ultralytics YOLO12](https://img.shields.io/badge/Ultralytics-YOLO12-purple?style=flat)](https://docs.ultralytics.com/models/yolo12/), powered by the Ultralytics platform: [![Ultralytics  Inc.](https://img.shields.io/badge/Ultralytics-Inc.-purple?style=flat)](https://docs.ultralytics.com).
+
+                    - **OCR task**: PaddleOCR v2.9 from [![GitHub Repo](https://img.shields.io/badge/GitHub-PaddlePaddle%2FPaddleOCR%2Frelease%2F2.9-blue?style=flat&logo=github)](https://github.com/PaddlePaddle/PaddleOCR/tree/release/2.9), with the main repository at [![GitHub Repo](https://img.shields.io/badge/GitHub-PaddlePaddle%2FPaddleOCR-blue?style=flat&logo=github)](https://github.com/PaddlePaddle/PaddleOCR) for OCR inference. Explore more about PaddleOCR at [![PaddleOCR Website](https://img.shields.io/badge/PaddleOCR-Website-purple?style=flat)](https://www.paddleocr.ai/main/en/index.html).
+                    """)
     # Example table click handler
     example_table.select(
         fn=load_example,
@@ -128,4 +140,4 @@ with gr.Blocks(css=custom_css) as iface:
     )
 
 if __name__ == "__main__":
-    iface.launch(share=True)
+    iface.launch()

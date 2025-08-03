@@ -1,8 +1,9 @@
-opencv-python
-ultralytics
-roboflow
+opencv-python>=4.11.0.86
+ultralytics>=8.3.162
+roboflow>=1.1.66
 wget
+albumentations==2.0.8
 ffmpeg-python
-paddleocr
-paddlepaddle-gpu
-paddlepaddle
+paddleocr==2.9.0 
+paddlepaddle-gpu==2.6.2 
+paddlepaddle==2.6.2

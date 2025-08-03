@@ -15,8 +15,8 @@ with gr.Blocks(css=custom_css) as iface:
     gr.Markdown(
         """
         # License Plate Detection and OCR
-        Upload an image or video to detect and read license plates. Outputs are saved in `apps/gradio_app/temp_data/`.
-        Debug logs are saved in `apps/gradio_app/debug.log`.
+        Detect license plates from images or videos and read their text using 
+        advanced computer vision and OCR for accurate identification.
         """,
         elem_classes="markdown-title"
     )

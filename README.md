@@ -1,4 +1,4 @@
-# License-Plate-Detector-OCR🎟️ (License-Plate-Detector-OCR)
+# License Plate Detector OCR🎟️
 
 
 

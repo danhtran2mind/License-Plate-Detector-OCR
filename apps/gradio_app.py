@@ -25,7 +25,8 @@ examples = [
 ]
 
 # Function to handle example selection
-def load_example(index):
+def load_example(evt: gr.SelectData):  # Modified to use SelectData
+    index = evt.index[0] if evt.index else 0  # Get row index from SelectData
     example = examples[index]
     input_file = example["input_file"]
     output_file = example["output_file"]
@@ -66,7 +67,7 @@ with gr.Blocks(css=custom_css) as iface:
             value=[[i, ex["input_type"], os.path.basename(ex["input_file"])] for i, ex in enumerate(examples)],
             headers=["Index", "Type", "File"],
             datatype=["number", "str", "str"],
-            interactive=False,
+            interactive=True,  # Changed to True to enable row selection
             elem_classes="custom-table"
         )
     

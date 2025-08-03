@@ -1,6 +1,7 @@
 import os
 import cv2
 import numpy as np
+from uuid import uuid4
 from inference.yolo_infer import yolo_infer
 from inference.paddleocr_infer import process_ocr
 
@@ -32,13 +33,14 @@ def process_image(model_path, image_path, output_path=None):
             
             # Draw bounding box and OCR text on the image
             cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
-            label = f"{plate_text}"
+            label = f"{plate_text} ({confidence:.2f})"
             cv2.putText(image, label, (x1, y1 - 10),
-                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
     
-    # Set default output path if not provided
+    # Set default output path with UUID if not provided
     if output_path is None:
-        output_path = os.path.splitext(image_path)[0] + '_output.jpg'
+        output_dir = "apps/gradio_app/temp_data"
+        output_path = os.path.join(output_dir, f"output_{uuid4()}.jpg")
     
     # Ensure output directory exists
     os.makedirs(os.path.dirname(output_path) or '.', exist_ok=True)
@@ -48,7 +50,7 @@ def process_image(model_path, image_path, output_path=None):
     return image, plate_texts
 
 def process_video(model_path, video_path, output_path=None):
-    """Process a video for license plate detection and OCR, writing text on detected boxes."""
+    """Process a video for license plate detection and OCR."""
     cap = cv2.VideoCapture(video_path)
     if not cap.isOpened():
         print(f"Error: Could not open video at {video_path}")
@@ -59,9 +61,10 @@ def process_video(model_path, video_path, output_path=None):
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps = int(cap.get(cv2.CAP_PROP_FPS))
     
-    # Set default output path if not provided
+    # Set default output path with UUID if not provided
     if output_path is None:
-        output_path = os.path.splitext(video_path)[0] + '_output.mp4'
+        output_dir = "apps/gradio_app/temp_data"
+        output_path = os.path.join(output_dir, f"output_{uuid4()}.mp4")
     
     # Ensure output directory exists
     os.makedirs(os.path.dirname(output_path) or '.', exist_ok=True)
@@ -104,15 +107,14 @@ def process_video(model_path, video_path, output_path=None):
                 
                 # Draw bounding box and OCR text on the frame
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                label = f"{plate_text}"
+                label = f"{plate_text} ({confidence:.2f})"
                 cv2.putText(frame, label, (x1, y1 - 10),
-                           cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         
         if boxes_detected:
             frames.append(frame)
             all_plate_texts.append(frame_plate_texts)
         else:
-            # Append frame even if no boxes detected to maintain video continuity
             frames.append(frame)
             all_plate_texts.append([])
         

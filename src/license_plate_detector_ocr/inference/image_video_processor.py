@@ -44,6 +44,7 @@ def process_image(model_path, image_path, output_path=None):
     
     # Ensure output directory exists
     os.makedirs(os.path.dirname(output_path) or '.', exist_ok=True)
+    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
     cv2.imwrite(output_path, image)
     print(f"Saved processed image to {output_path}")
     

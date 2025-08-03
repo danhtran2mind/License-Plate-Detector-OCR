@@ -1,7 +1,7 @@
 import gradio as gr
 import os
 from gradio_app.config import setup_logging, setup_sys_path
-from gradio_app.processor import gradio_process, update_preview, update_visibility
+from gradio_app.processor import gradio_process, update_preview, update_visibility, clear_preview_data
 
 # Initialize logging and sys.path
 setup_logging()
@@ -58,19 +58,8 @@ with gr.Blocks(css=custom_css) as iface:
         """,
         elem_classes="markdown-title"
     )
-    
-    # Examples table
-    with gr.Row():
-        gr.Markdown("## Examples")
-    with gr.Row():
-        example_table = gr.Dataframe(
-            value=[[i, ex["input_type"], os.path.basename(ex["input_file"])] for i, ex in enumerate(examples)],
-            headers=["Index", "Type", "File"],
-            datatype=["number", "str", "str"],
-            interactive=True,
-            elem_classes="custom-table"
-        )
-    
+
+        
     with gr.Row():
         with gr.Column(scale=1):
             input_file = gr.File(label="Upload Image or Video", elem_classes="custom-file-input")
@@ -81,7 +70,7 @@ with gr.Blocks(css=custom_css) as iface:
             with gr.Row():
                 clear_button = gr.Button("Clear", variant="secondary", elem_classes="custom-button secondary")
                 submit_button = gr.Button("Submit", variant="primary", elem_classes="custom-button primary")
-        with gr.Column(scale=2):
+        with gr.Column(scale=1):
             with gr.Blocks():
                 output_image = gr.Image(label="Processed Output (Image)", type="numpy", visible=True, elem_classes="custom-image")
                 output_video = gr.Video(label="Processed Output (Video)", visible=False, elem_classes="custom-video")
@@ -112,8 +101,25 @@ with gr.Blocks(css=custom_css) as iface:
     clear_button.click(
         fn=lambda: (None, None, None, "Image", None, None, None, None),
         outputs=[input_file, output_image, output_video, input_type, input_preview_image, input_preview_video, output_image, output_video]
+    ).then(
+        fn=clear_preview_data,
+        inputs=None,
+        outputs=None
     )
-    
+
+    # Examples table
+    with gr.Row():
+        gr.Markdown("### Examples")
+
+    with gr.Row():
+        example_table = gr.Dataframe(
+            value=[[i, ex["input_type"], os.path.basename(ex["input_file"])] for i, ex in enumerate(examples)],
+            headers=["Index", "Type", "File"],
+            datatype=["number", "str", "str"],
+            interactive=True,
+            elem_classes="custom-table"
+        )
+
     # Example table click handler
     example_table.select(
         fn=load_example,

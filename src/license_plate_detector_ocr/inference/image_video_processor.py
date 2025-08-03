@@ -32,7 +32,7 @@ def process_image(model_path, image_path, output_path=None):
             
             # Draw bounding box and OCR text on the image
             cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
-            label = f"{plate_text} ({confidence:.2f})"
+            label = f"{plate_text}"
             cv2.putText(image, label, (x1, y1 - 10),
                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
     
@@ -104,7 +104,7 @@ def process_video(model_path, video_path, output_path=None):
                 
                 # Draw bounding box and OCR text on the frame
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                label = f"{plate_text} ({confidence:.2f})"
+                label = f"{plate_text}"
                 cv2.putText(frame, label, (x1, y1 - 10),
                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         

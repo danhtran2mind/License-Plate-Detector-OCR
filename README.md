@@ -43,7 +43,7 @@ This project utilizes the YOLOv12 architecture, specifically the YOLO12n model, 
 
 ## Demonstration
 Experience the magic of Ghibli-style video generation:  
-- **HuggingFace Space**: [![HuggingFace Space Demo](https://img.shields.io/badge/HuggingFace-danhtran2mind%2FLicense--Plate--Detector--OCR-yellow?style=flat&logo=huggingface)](https://huggingface.co/spaces/danhtran2mind/License-Plate-Detector-OCR?logs=build)
+- **HuggingFace Space**: [![HuggingFace Space Demo](https://img.shields.io/badge/HuggingFace-danhtran2mind%2FLicense--Plate--Detector--OCR-yellow?style=flat&logo=huggingface)](https://huggingface.co/spaces/danhtran2mind/License-Plate-Detector-OCR)
 
 - **Demo GUI**:  
   <img src="./assets/gradio_app_demo.jpg" alt="Gradio Demo" height="600">
@@ -128,3 +128,4 @@ This project utilizes:
 - **Detection task**: YOLOv12 architecture model (YOLO12n) from [![GitHub Repo](https://img.shields.io/badge/GitHub-sunsmarterjie%2Fyolov12-blue?style=flat&logo=github)](https://github.com/sunsmarterjie/yolov12) and documentation at [![Ultralytics YOLO12](https://img.shields.io/badge/Ultralytics-YOLO12-purple?style=flat)](https://docs.ultralytics.com/models/yolo12/), powered by the Ultralytics platform: [![Ultralytics  Inc.](https://img.shields.io/badge/Ultralytics-Inc.-purple?style=flat)](https://docs.ultralytics.com).
 
 - **OCR task**: PaddleOCR v2.9 from [![GitHub Repo](https://img.shields.io/badge/GitHub-PaddlePaddle%2FPaddleOCR%2Frelease%2F2.9-blue?style=flat&logo=github)](https://github.com/PaddlePaddle/PaddleOCR/tree/release/2.9), with the main repository at [![GitHub Repo](https://img.shields.io/badge/GitHub-PaddlePaddle%2FPaddleOCR-blue?style=flat&logo=github)](https://github.com/PaddlePaddle/PaddleOCR) for OCR inference. Explore more about PaddleOCR at [![PaddleOCR Website](https://img.shields.io/badge/PaddleOCR-Website-purple?style=flat)](https://www.paddleocr.ai/main/en/index.html).
+

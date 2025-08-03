@@ -16,8 +16,11 @@ example_image_output = os.path.join(os.path.dirname(__file__), "gradio_app", "as
 example_video = os.path.join(os.path.dirname(__file__), "gradio_app", "assets", "examples", "license_plate_detector_ocr", "2", "lp_video.mp4")
 example_video_output = os.path.join(os.path.dirname(__file__), "gradio_app", "assets", "examples", "license_plate_detector_ocr", "2", "lp_video_output.mp4")
 
-# List of example file paths for gr.File
-example_file_paths = [example_image, example_video]
+# Format example files for gr.File
+example_file_data = [
+    {"path": example_image, "meta": {"_type": "gradio.FileData"}},
+    {"path": example_video, "meta": {"_type": "gradio.FileData"}}
+]
 
 # Gradio Interface
 with gr.Blocks(css=custom_css) as iface:
@@ -36,7 +39,7 @@ with gr.Blocks(css=custom_css) as iface:
                 label="Upload Image or Video",
                 elem_classes="custom-file-input",
                 file_types=["image", "video"],
-                value=example_file_paths
+                value=example_file_data
             )
             input_type = gr.Radio(
                 choices=["Image", "Video"],
@@ -92,7 +95,7 @@ with gr.Blocks(css=custom_css) as iface:
     input_file.change(
         fn=lambda file, input_type: (
             update_preview(file, input_type),
-            "Image" if file and any(f.lower().endswith(('.jpg', '.jpeg', '.png')) for f in (file if isinstance(file, list) else [file])) else "Video"
+            "Image" if file and any(f["path"].lower().endswith(('.jpg', '.jpeg', '.png')) for f in (file if isinstance(file, list) else [file])) else "Video"
         ),
         inputs=[input_file, input_type],
         outputs=[input_preview_image, input_preview_video, input_type]
@@ -108,7 +111,7 @@ with gr.Blocks(css=custom_css) as iface:
     # Clear button functionality
     clear_button.click(
         fn=lambda: (
-            None, None, None, "Image",
+            example_file_data, None, None, "Image",
             example_image, example_video, example_image_output, example_video_output
         ),
         outputs=[

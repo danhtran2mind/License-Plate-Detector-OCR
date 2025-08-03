@@ -11,16 +11,41 @@ setup_sys_path()
 custom_css = open(os.path.join(os.path.dirname(__file__), "gradio_app", "static", "styles.css"), "r").read()
 
 # Define example files
-example_image = os.path.join(os.path.dirname(__file__), "gradio_app", "assets", "examples", "license_plate_detector_ocr", "1", "lp_image.jpg")
-example_image_output = os.path.join(os.path.dirname(__file__), "gradio_app", "assets", "examples", "license_plate_detector_ocr", "1", "lp_image_output.jpg")
-example_video = os.path.join(os.path.dirname(__file__), "gradio_app", "assets", "examples", "license_plate_detector_ocr", "2", "lp_video.mp4")
-example_video_output = os.path.join(os.path.dirname(__file__), "gradio_app", "assets", "examples", "license_plate_detector_ocr", "2", "lp_video_output.mp4")
-
-# Format example files for gr.File
-example_file_data = [
-    {"path": example_image, "meta": {"_type": "gradio.FileData"}},
-    {"path": example_video, "meta": {"_type": "gradio.FileData"}}
+examples = [
+    {
+        "input_file": os.path.join(os.path.dirname(__file__), "gradio_app", "assets", "examples", "license_plate_detector_ocr", "1", "lp_image.jpg"),
+        "output_file": os.path.join(os.path.dirname(__file__), "gradio_app", "assets", "examples", "license_plate_detector_ocr", "1", "lp_image_output.jpg"),
+        "input_type": "Image"
+    },
+    {
+        "input_file": os.path.join(os.path.dirname(__file__), "gradio_app", "assets", "examples", "license_plate_detector_ocr", "2", "lp_video.mp4"),
+        "output_file": os.path.join(os.path.dirname(__file__), "gradio_app", "assets", "examples", "license_plate_detector_ocr", "2", "lp_video_output.mp4"),
+        "input_type": "Video"
+    }
 ]
+
+# Function to handle example selection
+def load_example(index):
+    example = examples[index]
+    input_file = example["input_file"]
+    output_file = example["output_file"]
+    input_type = example["input_type"]
+    
+    # Update visibility based on input type
+    input_preview_image, input_preview_video, output_image, output_video = update_visibility(input_type)
+    
+    # Update preview based on input file and type
+    input_preview_image, input_preview_video = update_preview(input_file, input_type)
+    
+    return (
+        input_file,
+        input_type,
+        input_preview_image,
+        input_preview_video,
+        output_file if input_type == "Image" else None,
+        output_file if input_type == "Video" else None,
+        "Example loaded - click Submit to process"
+    )
 
 # Gradio Interface
 with gr.Blocks(css=custom_css) as iface:
@@ -33,56 +58,33 @@ with gr.Blocks(css=custom_css) as iface:
         elem_classes="markdown-title"
     )
     
+    # Examples table
+    with gr.Row():
+        gr.Markdown("## Examples")
+    with gr.Row():
+        example_table = gr.Dataframe(
+            value=[[i, ex["input_type"], os.path.basename(ex["input_file"])] for i, ex in enumerate(examples)],
+            headers=["Index", "Type", "File"],
+            datatype=["number", "str", "str"],
+            interactive=False,
+            elem_classes="custom-table"
+        )
+    
     with gr.Row():
         with gr.Column(scale=1):
-            input_file = gr.File(
-                label="Upload Image or Video",
-                elem_classes="custom-file-input",
-                file_types=["image", "video"],
-                value=example_file_data
-            )
-            input_type = gr.Radio(
-                choices=["Image", "Video"],
-                label="Input Type",
-                value="Image",
-                elem_classes="custom-radio"
-            )
+            input_file = gr.File(label="Upload Image or Video", elem_classes="custom-file-input")
+            input_type = gr.Radio(choices=["Image", "Video"], label="Input Type", value="Image", elem_classes="custom-radio")
             with gr.Blocks():
-                input_preview_image = gr.Image(
-                    label="Input Preview",
-                    visible=True,
-                    value=example_image,
-                    elem_classes="custom-image"
-                )
-                input_preview_video = gr.Video(
-                    label="Input Preview",
-                    visible=False,
-                    value=example_video,
-                    elem_classes="custom-video"
-                )
+                input_preview_image = gr.Image(label="Input Preview", visible=True, elem_classes="custom-image")
+                input_preview_video = gr.Video(label="Input Preview", visible=False, elem_classes="custom-video")
             with gr.Row():
                 clear_button = gr.Button("Clear", variant="secondary", elem_classes="custom-button secondary")
                 submit_button = gr.Button("Submit", variant="primary", elem_classes="custom-button primary")
         with gr.Column(scale=2):
             with gr.Blocks():
-                output_image = gr.Image(
-                    label="Processed Output (Image)",
-                    type="numpy",
-                    visible=True,
-                    value=example_image_output,
-                    elem_classes="custom-image"
-                )
-                output_video = gr.Video(
-                    label="Processed Output (Video)",
-                    visible=False,
-                    value=example_video_output,
-                    elem_classes="custom-video"
-                )
-            output_text = gr.Textbox(
-                label="Detected License Plates",
-                lines=10,
-                elem_classes="custom-textbox"
-            )
+                output_image = gr.Image(label="Processed Output (Image)", type="numpy", visible=True, elem_classes="custom-image")
+                output_video = gr.Video(label="Processed Output (Video)", visible=False, elem_classes="custom-video")
+            output_text = gr.Textbox(label="Detected License Plates", lines=10, elem_classes="custom-textbox")
 
     # Update preview and output visibility when input type changes
     input_type.change(
@@ -93,12 +95,9 @@ with gr.Blocks(css=custom_css) as iface:
 
     # Update preview when file is uploaded
     input_file.change(
-        fn=lambda file, input_type: (
-            update_preview(file, input_type),
-            "Image" if file and any(f["path"].lower().endswith(('.jpg', '.jpeg', '.png')) for f in (file if isinstance(file, list) else [file])) else "Video"
-        ),
+        fn=update_preview,
         inputs=[input_file, input_type],
-        outputs=[input_preview_image, input_preview_video, input_type]
+        outputs=[input_preview_image, input_preview_video]
     )
     
     # Bind the processing function
@@ -110,14 +109,15 @@ with gr.Blocks(css=custom_css) as iface:
     
     # Clear button functionality
     clear_button.click(
-        fn=lambda: (
-            example_file_data, None, None, "Image",
-            example_image, example_video, example_image_output, example_video_output
-        ),
-        outputs=[
-            input_file, output_image, output_video, input_type,
-            input_preview_image, input_preview_video, output_image, output_video
-        ]
+        fn=lambda: (None, None, None, "Image", None, None, None, None),
+        outputs=[input_file, output_image, output_video, input_type, input_preview_image, input_preview_video, output_image, output_video]
+    )
+    
+    # Example table click handler
+    example_table.select(
+        fn=load_example,
+        inputs=None,
+        outputs=[input_file, input_type, input_preview_image, input_preview_video, output_image, output_video, output_text]
     )
 
 if __name__ == "__main__":

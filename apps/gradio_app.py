@@ -16,6 +16,12 @@ example_image_output = os.path.join(os.path.dirname(__file__), "gradio_app", "as
 example_video = os.path.join(os.path.dirname(__file__), "gradio_app", "assets", "examples", "license_plate_detector_ocr", "2", "lp_video.mp4")
 example_video_output = os.path.join(os.path.dirname(__file__), "gradio_app", "assets", "examples", "license_plate_detector_ocr", "2", "lp_video_output.mp4")
 
+# Format example files for Gradio File component
+example_files = [
+    {"path": example_image, "meta": {"_type": "gradio.FileData"}},
+    {"path": example_video, "meta": {"_type": "gradio.FileData"}}
+]
+
 # Gradio Interface
 with gr.Blocks(css=custom_css) as iface:
     gr.Markdown(
@@ -33,7 +39,7 @@ with gr.Blocks(css=custom_css) as iface:
                 label="Upload Image or Video",
                 elem_classes="custom-file-input",
                 file_types=["image", "video"],
-                value=[example_image, example_video]
+                value=example_files
             )
             input_type = gr.Radio(
                 choices=["Image", "Video"],
@@ -89,7 +95,7 @@ with gr.Blocks(css=custom_css) as iface:
     input_file.change(
         fn=lambda file, input_type: (
             update_preview(file, input_type),
-            "Image" if file and file.name.lower().endswith(('.jpg', '.jpeg', '.png')) else "Video"
+            "Image" if file and any(f["path"].lower().endswith(('.jpg', '.jpeg', '.png')) for f in file) else "Video"
         ),
         inputs=[input_file, input_type],
         outputs=[input_preview_image, input_preview_video, input_type]

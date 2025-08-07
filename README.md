@@ -55,6 +55,18 @@ For your project requiring a large license plate dataset for training, the many 
 
 This project utilizes the YOLOv12 architecture, specifically the YOLO12n model, a lightweight and efficient solution from Ultralytics for real-time object detection. The YOLO12n model employs an attention-centric design, delivering high accuracy and optimized performance for applications like autonomous driving, surveillance, and robotics. The YOLOv12 source code available at [![GitHub Repo](https://img.shields.io/badge/GitHub-sunsmarterjie%2Fyolov12-blue?style=flat&logo=github)](https://github.com/sunsmarterjie/yolov12), powered by the [![Ultralytics Inc.](https://img.shields.io/badge/Ultralytics-Inc.-purple?style=flat)](https://docs.ultralytics.com) platform, with comprehensive documentation available for setup, training, and deployment.
 
+## Notebook
+You can explore Training and Evaluation Notebook at:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/danhtran2mind/License-Plate-Detector-OCR/blob/main/notebooks/license-plate-detector-ocr.ipynb)
+[![Open in SageMaker](https://studiolab.sagemaker.aws/studiolab.svg)](https://studiolab.sagemaker.aws/import/github/danhtran2mind/License-Plate-Detector-OCR/blob/main/notebooks/license-plate-detector-ocr.ipynb)
+[![Open in Deepnote](https://deepnote.com/buttons/launch-in-deepnote-small.svg)](https://deepnote.com/launch?url=https://github.com/danhtran2mind/License-Plate-Detector-OCR/blob/main/notebooks/license-plate-detector-ocr.ipynb)
+[![JupyterLab](https://img.shields.io/badge/Launch-JupyterLab-orange?logo=Jupyter)](https://mybinder.org/v2/gh/danhtran2mind/License-Plate-Detector-OCR/main?filepath=notebooks/license-plate-detector-ocr.ipynb)
+[![Open in Gradient](https://assets.paperspace.io/img/gradient-badge.svg)](https://console.paperspace.com/github/danhtran2mind/License-Plate-Detector-OCR/blob/main/notebooks/license-plate-detector-ocr.ipynb)
+[![Open in Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/danhtran2mind/License-Plate-Detector-OCR/main)
+[![Open In Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://www.kaggle.com/notebooks/welcome?src=https%3A%2F%2Fgithub.com%2Fdanhtran2mind/License-Plate-Detector-OCR/blob/main/notebooks/license-plate-detector-ocr.ipynb)
+[![View on GitHub](https://img.shields.io/badge/View%20on-GitHub-181717?logo=github)](https://github.com/danhtran2mind/License-Plate-Detector-OCR/blob/main/notebooks/license-plate-detector-ocr.ipynb)
+
 ## Demonstration
 License-Plate-Detector-OCR uses computer vision, OCR to detect, read license plates:
 - **HuggingFace Space**: [![HuggingFace Space Demo](https://img.shields.io/badge/HuggingFace-danhtran2mind%2FLicense--Plate--Detector--OCR-yellow?style=flat&logo=huggingface)](https://huggingface.co/spaces/danhtran2mind/License-Plate-Detector-OCR)
@@ -142,6 +154,7 @@ This project utilizes:
 - **Detection task**: YOLOv12 architecture model (YOLO12n) from [![GitHub Repo](https://img.shields.io/badge/GitHub-sunsmarterjie%2Fyolov12-blue?style=flat&logo=github)](https://github.com/sunsmarterjie/yolov12) and documentation at [![Ultralytics YOLO12](https://img.shields.io/badge/Ultralytics-YOLO12-purple?style=flat)](https://docs.ultralytics.com/models/yolo12/), powered by the Ultralytics platform: [![Ultralytics  Inc.](https://img.shields.io/badge/Ultralytics-Inc.-purple?style=flat)](https://docs.ultralytics.com).
 
 - **OCR task**: PaddleOCR v2.9 from [![GitHub Repo](https://img.shields.io/badge/GitHub-PaddlePaddle%2FPaddleOCR%2Frelease%2F2.9-blue?style=flat&logo=github)](https://github.com/PaddlePaddle/PaddleOCR/tree/release/2.9), with the main repository at [![GitHub Repo](https://img.shields.io/badge/GitHub-PaddlePaddle%2FPaddleOCR-blue?style=flat&logo=github)](https://github.com/PaddlePaddle/PaddleOCR) for OCR inference. Explore more about PaddleOCR at [![PaddleOCR Website](https://img.shields.io/badge/PaddleOCR-Website-purple?style=flat)](https://www.paddleocr.ai/main/en/index.html).
+
 
 
 

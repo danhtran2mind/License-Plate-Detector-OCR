@@ -40,16 +40,16 @@ Detect license plates from images or videos and read their text using advanced c
 
 For your project requiring a large license plate dataset for training, the many datasets referenced from Kaggle, HuggingFace, and Roboflow are suitable choices for training machine learning models for license plate detection and recognition tasks. Below is a description of each dataset and how they can be utilized for your project:
 
-- [![Kaggle](https://img.shields.io/badge/Kaggle-fareselmenshawii%2Flarge--license--plate--dataset-blue)](https://www.kaggle.com/datasets/fareselmenshawii/large-license-plate-dataset)
-- [![Kaggle](https://img.shields.io/badge/Kaggle-duydieunguyen%2Flicenseplates-blue)](https://www.kaggle.com/datasets/duydieunguyen/licenseplates)
-- [![Kaggle](https://img.shields.io/badge/Kaggle-ronakgohil%2Flicense--plate--dataset-blue)](https://www.kaggle.com/datasets/ronakgohil/license-plate-dataset)
-- [![Kaggle](https://img.shields.io/badge/Kaggle-bomaich%2Fvnlicenseplate-blue)](https://www.kaggle.com/datasets/bomaich/vnlicenseplate)
-- [![Kaggle](https://img.shields.io/badge/Kaggle-congtuu%2Fvietnamese--license--plate--obb-blue)](https://www.kaggle.com/datasets/congtuu/vietnamese-license-plate-obb)
-- [![Kaggle](https://img.shields.io/badge/Kaggle-haitonthat%2Fvietnam--license--plate--bounding--box-blue)](https://www.kaggle.com/datasets/haitonthat/vietnam-license-plate-bounding-box)
-- [![Roboflow](https://img.shields.io/badge/Roboflow-university--of--southeastern--philippines--cnl9c%2Flicense--plate--detection--merged--projects-blue)](https://universe.roboflow.com/university-of-southeastern-philippines-cnl9c/license-plate-detection-merged-projects)
-- [![Roboflow](https://img.shields.io/badge/Roboflow-ev--dshfb%2Flicense--plate--w8chc-blue)](https://universe.roboflow.com/ev-dshfb/license-plate-w8chc)
-- [![Roboflow](https://img.shields.io/badge/Roboflow-kanwal--masroor--gv4jr%2Fyolov7--license--plate--detection-blue)](https://universe.roboflow.com/kanwal-masroor-gv4jr/yolov7-license-plate-detection)
-- [![HuggingFace](https://img.shields.io/badge/HuggingFace-keremberke%2Flicense--plate--object--detection-blue)](https://huggingface.co/datasets/keremberke/license-plate-object-detection)
+- [![Kaggle](https://img.shields.io/badge/Kaggle-fareselmenshawii%2Flarge--license--plate--dataset-blue?style=flat&logo=kaggle)](https://www.kaggle.com/datasets/fareselmenshawii/large-license-plate-dataset)
+- [![Kaggle](https://img.shields.io/badge/Kaggle-duydieunguyen%2Flicenseplates-blue?style=flat&logo=kaggle)](https://www.kaggle.com/datasets/duydieunguyen/licenseplates)
+- [![Kaggle](https://img.shields.io/badge/Kaggle-ronakgohil%2Flicense--plate--dataset-blue?style=flat&logo=kaggle)](https://www.kaggle.com/datasets/ronakgohil/license-plate-dataset)
+- [![Kaggle](https://img.shields.io/badge/Kaggle-bomaich%2Fvnlicenseplate-blue?style=flat&logo=kaggle)](https://www.kaggle.com/datasets/bomaich/vnlicenseplate)
+- [![Kaggle](https://img.shields.io/badge/Kaggle-congtuu%2Fvietnamese--license--plate--obb-blue?style=flat&logo=kaggle)](https://www.kaggle.com/datasets/congtuu/vietnamese-license-plate-obb)
+- [![Kaggle](https://img.shields.io/badge/Kaggle-haitonthat%2Fvietnam--license--plate--bounding--box-blue?style=flat&logo=kaggle)](https://www.kaggle.com/datasets/haitonthat/vietnam-license-plate-bounding-box)
+- [![Roboflow](https://img.shields.io/badge/Roboflow-university--of--southeastern--philippines--cnl9c%2Flicense--plate--detection--merged--projects-blue?style=flat&logo=kaggle)](https://universe.roboflow.com/university-of-southeastern-philippines-cnl9c/license-plate-detection-merged-projects)
+- [![Roboflow](https://img.shields.io/badge/Roboflow-ev--dshfb%2Flicense--plate--w8chc-blue?style=flat&logo=kaggle)](https://universe.roboflow.com/ev-dshfb/license-plate-w8chc)
+- [![Roboflow](https://img.shields.io/badge/Roboflow-kanwal--masroor--gv4jr%2Fyolov7--license--plate--detection-blue?style=flat&logo=kaggle)](https://universe.roboflow.com/kanwal-masroor-gv4jr/yolov7-license-plate-detection)
+- [![HuggingFace](https://img.shields.io/badge/HuggingFace-keremberke%2Flicense--plate--object--detection-blue?style=flat&logo=kaggle)](https://huggingface.co/datasets/keremberke/license-plate-object-detection)
 
 ## Base Model
 
@@ -142,6 +142,7 @@ This project utilizes:
 - **Detection task**: YOLOv12 architecture model (YOLO12n) from [![GitHub Repo](https://img.shields.io/badge/GitHub-sunsmarterjie%2Fyolov12-blue?style=flat&logo=github)](https://github.com/sunsmarterjie/yolov12) and documentation at [![Ultralytics YOLO12](https://img.shields.io/badge/Ultralytics-YOLO12-purple?style=flat)](https://docs.ultralytics.com/models/yolo12/), powered by the Ultralytics platform: [![Ultralytics  Inc.](https://img.shields.io/badge/Ultralytics-Inc.-purple?style=flat)](https://docs.ultralytics.com).
 
 - **OCR task**: PaddleOCR v2.9 from [![GitHub Repo](https://img.shields.io/badge/GitHub-PaddlePaddle%2FPaddleOCR%2Frelease%2F2.9-blue?style=flat&logo=github)](https://github.com/PaddlePaddle/PaddleOCR/tree/release/2.9), with the main repository at [![GitHub Repo](https://img.shields.io/badge/GitHub-PaddlePaddle%2FPaddleOCR-blue?style=flat&logo=github)](https://github.com/PaddlePaddle/PaddleOCR) for OCR inference. Explore more about PaddleOCR at [![PaddleOCR Website](https://img.shields.io/badge/PaddleOCR-Website-purple?style=flat)](https://www.paddleocr.ai/main/en/index.html).
+
 
 
 

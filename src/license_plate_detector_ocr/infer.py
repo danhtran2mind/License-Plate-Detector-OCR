@@ -12,9 +12,9 @@ def is_image_file(file_path):
     image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.tiff'}
     return os.path.splitext(file_path)[1].lower() in image_extensions
 
-def infer(input_path, output_path=None):
+def infer(model_path, input_path, output_path=None):
     """Process an image or video for license plate detection and OCR."""
-    model_path = "ckpts/yolo/finetune/runs/license_plate_detector/weights/best.pt"
+    # model_path = "ckpts/yolo/finetune/runs/license_plate_detector/weights/best.pt"
     
     logging.debug(f"Starting inference for {input_path} with output {output_path}")
     
@@ -53,7 +53,10 @@ def infer(input_path, output_path=None):
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="Detect and read license plates in an image or video.")
+    parser.add_argument("--model_path", type=str, default="ckpts/yolo/finetune/runs/license_plate_detector/weights/best.pt",
+                        help="Path to the model file")
     parser.add_argument("--input_path", type=str, required=True, help="Path to the input image or video file")
     parser.add_argument("--output_path", type=str, default=None, help="Path to save the output file (optional)")
     args = parser.parse_args()
-    result_array, plate_texts = infer(args.input_path, args.output_path)
+
+    result_array, plate_texts = infer(args.model_path, args.input_path, args.output_path)

@@ -6,4 +6,6 @@ albumentations==2.0.8
 ffmpeg-python==0.2.0
 paddleocr==2.9.0 
 paddlepaddle-gpu==2.6.2 
+
 paddlepaddle==2.6.2
+onnxruntime==1.21.0

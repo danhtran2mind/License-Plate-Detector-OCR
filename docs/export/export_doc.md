@@ -1,10 +1,10 @@
 # Export ONNX Script Argument Documentation
 
-This document describes the command-line arguments for the `export_onnx.py` script, which exports YOLOv8 models to ONNX format and verifies them.
+This document describes the command-line arguments for the `src/license_plate_detector_ocr/export/export_onnx.py` script, which exports YOLOv8 models to ONNX format and verifies them.
 
 ## Usage
 ```bash
-python export_onnx.py --model-paths <model_path> [options]
+python src/license_plate_detector_ocr/export/export_onnx.py --model-paths <model_path> [options]
 ```
 
 ## Arguments
@@ -21,17 +21,17 @@ python export_onnx.py --model-paths <model_path> [options]
 
 1. Export a single model with default settings:
 ```bash
-python export_onnx.py --model-paths yolov8n.pt
+python src/license_plate_detector_ocr/export/export_onnx.py --model-paths yolov8n.pt
 ```
 
 2. Export multiple models with custom output names and dynamic shapes:
 ```bash
-python export_onnx.py --model-paths yolov8n.pt yolov8s.pt --output-names model_n.onnx model_s.onnx --dynamic
+python src/license_plate_detector_ocr/export/export_onnx.py --model-paths yolov8n.pt yolov8s.pt --output-names model_n.onnx model_s.onnx --dynamic
 ```
 
 3. Export a model with a specific image size and simplification:
 ```bash
-python export_onnx.py --model-paths yolov8n.pt --img-size 416 --simplify
+python src/license_plate_detector_ocr/export/export_onnx.py --model-paths yolov8n.pt --img-size 416 --simplify
 ```
 
 ## Notes

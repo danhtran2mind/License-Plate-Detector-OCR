@@ -1,5 +1,6 @@
 opencv-python>=4.11.0.86
 ultralytics>=8.3.162
+onnxruntime>=1.21.0
 roboflow>=1.1.66
 wget
 albumentations==2.0.8

@@ -1,5 +1,6 @@
 import gradio as gr
 import os
+import sys
 from gradio_app.config import setup_logging, setup_sys_path
 from gradio_app.processor import gradio_process, update_preview, update_visibility, clear_preview_data
 
@@ -10,17 +11,27 @@ setup_sys_path()
 # Load custom CSS
 custom_css = open(os.path.join(os.path.dirname(__file__), "gradio_app", "static", "styles.css"), "r").read()
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+# Define model directory and get available models
+model_dir = os.path.join("ckpts", "yolo", "finetune", "runs", "license_plate_detector", "weights")
+model_files = [f for f in os.listdir(model_dir) if os.path.isfile(os.path.join(model_dir, f))]
+model_files = [os.path.join(model_dir, f) for f in model_files]
+default_model = next((element for element in model_files if "best" in element and element.endswith('.onnx')), None)
+
 # Define example files
 examples = [
     {
         "input_file": os.path.join(os.path.dirname(__file__), "gradio_app", "assets", "examples", "license_plate_detector_ocr", "1", "lp_image.jpg"),
         "output_file": os.path.join(os.path.dirname(__file__), "gradio_app", "assets", "examples", "license_plate_detector_ocr", "1", "lp_image_output.jpg"),
-        "input_type": "Image"
+        "input_type": "Image",
+        "model_path": os.path.join(model_dir, "best.pt") if os.path.exists(os.path.join(model_dir, "best.pt")) else None
     },
     {
         "input_file": os.path.join(os.path.dirname(__file__), "gradio_app", "assets", "examples", "license_plate_detector_ocr", "2", "lp_video.mp4"),
         "output_file": os.path.join(os.path.dirname(__file__), "gradio_app", "assets", "examples", "license_plate_detector_ocr", "2", "lp_video_output.mp4"),
-        "input_type": "Video"
+        "input_type": "Video",
+        "model_path": os.path.join(model_dir, "best.pt") if os.path.exists(os.path.join(model_dir, "best.pt")) else None
     }
 ]
 
@@ -31,6 +42,7 @@ def load_example(evt: gr.SelectData):
     input_file = example["input_file"]
     output_file = example["output_file"]
     input_type = example["input_type"]
+    model_path = example["model_path"]
     
     # Update visibility based on input type
     input_preview_image, input_preview_video, output_image, output_video = update_visibility(input_type)
@@ -45,6 +57,7 @@ def load_example(evt: gr.SelectData):
         input_preview_video,
         output_file if input_type == "Image" else None,
         output_file if input_type == "Video" else None,
+        model_path,
         "Example loaded - click Submit to process"
     )
 
@@ -69,6 +82,7 @@ with gr.Blocks(css=custom_css) as iface:
         with gr.Column(scale=1):
             input_file = gr.File(label="Upload Image or Video", elem_classes="custom-file-input")
             input_type = gr.Radio(choices=["Image", "Video"], label="Input Type", value="Image", elem_classes="custom-radio")
+            model_path = gr.Dropdown(choices=model_files, label="Select Model", value=default_model, elem_classes="custom-dropdown")
             with gr.Blocks():
                 input_preview_image = gr.Image(label="Input Preview", visible=True, elem_classes="custom-image")
                 input_preview_video = gr.Video(label="Input Preview", visible=False, elem_classes="custom-video")
@@ -98,14 +112,14 @@ with gr.Blocks(css=custom_css) as iface:
     # Bind the processing function
     submit_button.click(
         fn=gradio_process,
-        inputs=[input_file, input_type],
+        inputs=[model_path, input_file, input_type],
         outputs=[output_image, output_video, output_text, input_preview_image, input_preview_video]
     )
     
     # Clear button functionality
     clear_button.click(
-        fn=lambda: (None, None, None, "Image", None, None, None, None),
-        outputs=[input_file, output_image, output_video, input_type, input_preview_image, input_preview_video, output_image, output_video]
+        fn=lambda: (None, None, None, "Image", None, None, None, default_model),
+        outputs=[input_file, output_image, output_video, input_type, input_preview_image, input_preview_video, output_text, model_path]
     ).then(
         fn=clear_preview_data,
         inputs=None,
@@ -118,9 +132,9 @@ with gr.Blocks(css=custom_css) as iface:
 
     with gr.Row():
         example_table = gr.Dataframe(
-            value=[[i, ex["input_type"], os.path.basename(ex["input_file"])] for i, ex in enumerate(examples)],
-            headers=["Index", "Type", "File"],
-            datatype=["number", "str", "str"],
+            value=[[i, ex["input_type"], os.path.basename(ex["input_file"]), os.path.basename(ex["model_path"])] for i, ex in enumerate(examples)],
+            headers=["Index", "Type", "File", "Model"],
+            datatype=["number", "str", "str", "str"],
             interactive=True,
             elem_classes="custom-table"
         )
@@ -136,7 +150,7 @@ with gr.Blocks(css=custom_css) as iface:
     example_table.select(
         fn=load_example,
         inputs=None,
-        outputs=[input_file, input_type, input_preview_image, input_preview_video, output_image, output_video, output_text]
+        outputs=[input_file, input_type, input_preview_image, input_preview_video, output_image, output_video, model_path, output_text]
     )
 
 if __name__ == "__main__":

@@ -80,11 +80,14 @@ This script integrates YOLO-based license plate detection with OCR to process im
 
 #### Command-Line Arguments
 The script supports command-line execution with the following arguments:
-- `--input_path` (`str`, required): Path to the input image or video file.
-  - Example: `--input_path <path_to_plate_image_1>` or `--input_path video.mp4`
-- `--output_path` (`str`, optional): Path to save the processed output file.
-  - Example: `--output_path output/plate_output.jpg`
-  - If not specified, defaults to the input path with `_output` appended.
+## Command-Line Arguments
+The script supports command-line execution with the following arguments:
+
+| Argument        | Type | Required | Default | Description                                                                 | Example                                   |
+|-----------------|------|----------|---------|-----------------------------------------------------------------------------|-------------------------------------------|
+| `--model_path`  | `str` | None| `ckpts/yolo/finetune/runs/license_plate_detector/weights/best.pt`| Path to the model file.                                      | `--model_path <path_to_model_path>` or `--model_path best.pt` |
+| `--input_path`  | `str` | Yes      | None    | Path to the input image or video file.                                      | `--input_path <path_to_plate_image_1>` or `--input_path video.mp4` |
+| `--output_path` | `str` | No       | Input path with `_output` appended | Path to save the processed output file. | `--output_path output/plate_output.jpg` |
 
 #### Example Command-Line Usage
 ```bash

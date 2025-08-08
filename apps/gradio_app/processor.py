@@ -13,7 +13,7 @@ from gradio_app.utils import convert_to_supported_format
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'src', 'license_plate_detector_ocr')))
 from infer import infer, is_image_file
 
-def gradio_process(input_file, input_type):
+def gradio_process(model_path, input_file, input_type):
     """Process the input file (image or video) for license plate detection and OCR."""
     unique_id = str(uuid.uuid4())[:8]
     temp_input_dir = os.path.abspath(os.path.join("apps/gradio_app/temp_data", unique_id))
@@ -107,7 +107,7 @@ def gradio_process(input_file, input_type):
         
         # Call the infer function
         logging.debug(f"Calling infer with input: {temp_input_path}, output: {output_path}")
-        result_array, plate_texts = infer(temp_input_path, output_path)
+        result_array, plate_texts = infer(model_path, temp_input_path, output_path)
         
         if result_array is None and is_image_file(temp_input_path):
             error_msg = f"Error: Processing failed for {temp_input_path}. 'infer' returned None. Check infer.py logs for details."

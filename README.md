@@ -20,22 +20,16 @@ Detect license plates from images or videos and read their text using advanced c
 
 ## Key Features 🎯
 
--   **Real-Time Detection** 🚗: YOLOv12n enables fast, accurate license plate detection in images/videos.
-    
--   **Accurate OCR** 📝: PaddleOCR v2.9 extracts license plate text with high precision.
-    
--   **Multi-Platform Datasets** 📊: Supports Kaggle, HuggingFace, and Roboflow datasets for training.
-    
--   **Efficient Design** ⚡: Lightweight YOLOv12n optimized for resource-constrained environments.
-    
--   **Gradio GUI** 🖥️: Intuitive interface for visualizing detection and OCR results.
-    
--   **Flexible Inference** 📸: Processes both images and videos for diverse applications.
-    
--   **Customizable Training** 🛠️: Scripts for easy dataset prep, training, and model setup.
-    
--   **Scalable Use** 🌐: Ideal for autonomous driving, surveillance, and traffic systems
-
+-   **Real-Time Detection**  🚗: YOLOv12n delivers fast, accurate license plate detection in images/videos, optimized for low-latency performance.
+-   **Accurate OCR**  📝: PaddleOCR v2.9 ensures high-precision license plate text extraction across various plate designs.
+-   **Multi-Platform Datasets**  📊: Supports Kaggle, HuggingFace, and Roboflow datasets for robust training and generalization.
+-   **Efficient Design with ONNX Export**  ⚡: Lightweight YOLOv12n model, exportable to ONNX format for cross-platform compatibility and optimized inference on CPU, GPU, or NPU hardware.
+-   **ONNX Inference**  🚀: Utilizes ONNX Runtime for efficient, scalable inference, enabling seamless deployment on diverse devices with minimal latency.
+-   **Gradio GUI**  🖥️: Intuitive interface for visualizing detection and OCR results, integrated with ONNX-based inference workflows.
+-   **Flexible Inference**  📸: Processes images and videos using ONNX Runtime, supporting a wide range of real-world applications.
+-   **Customizable Training**  🛠️: Includes scripts for dataset preparation, training, and exporting YOLOv12n to ONNX for streamlined model deployment.
+-   **Scalable Use**  🌐: Ideal for autonomous driving, surveillance, and traffic systems, with ONNX enabling deployment on edge devices and cloud platforms.
+-   
 ## Dataset
 
 For your project requiring a large license plate dataset for training, the many datasets referenced from Kaggle, HuggingFace, and Roboflow are suitable choices for training machine learning models for license plate detection and recognition tasks. Below is a description of each dataset and how they can be utilized for your project:
@@ -156,6 +150,7 @@ This project utilizes:
 - **Detection task**: YOLOv12 architecture model (YOLO12n) from [![GitHub Repo](https://img.shields.io/badge/GitHub-sunsmarterjie%2Fyolov12-blue?style=flat&logo=github)](https://github.com/sunsmarterjie/yolov12) and documentation at [![Ultralytics YOLO12](https://img.shields.io/badge/Ultralytics-YOLO12-purple?style=flat)](https://docs.ultralytics.com/models/yolo12/), powered by the Ultralytics platform: [![Ultralytics  Inc.](https://img.shields.io/badge/Ultralytics-Inc.-purple?style=flat)](https://docs.ultralytics.com).
 
 - **OCR task**: PaddleOCR v2.9 from [![GitHub Repo](https://img.shields.io/badge/GitHub-PaddlePaddle%2FPaddleOCR%2Frelease%2F2.9-blue?style=flat&logo=github)](https://github.com/PaddlePaddle/PaddleOCR/tree/release/2.9), with the main repository at [![GitHub Repo](https://img.shields.io/badge/GitHub-PaddlePaddle%2FPaddleOCR-blue?style=flat&logo=github)](https://github.com/PaddlePaddle/PaddleOCR) for OCR inference. Explore more about PaddleOCR at [![PaddleOCR Website](https://img.shields.io/badge/PaddleOCR-Website-purple?style=flat)](https://www.paddleocr.ai/main/en/index.html).
+
 
 
 
